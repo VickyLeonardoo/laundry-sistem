@@ -36,11 +36,11 @@
         <li class="sidebar-item  has-sub">
             <a href="#" class='sidebar-link'>
                 <i class="bi bi-collection-fill"></i>
-                <span>Transaksi</span>
+                <span>Order List</span>
             </a>
-            <ul class="submenu ">
-                <li class="submenu-item ">
-                    <a href="extra-component-avatar.html">Menunggu</a>
+            <ul class="submenu {{ Route::is('admin.order.menunggu.*') ? 'active':'' }}">
+                <li class="submenu-item {{ Route::is('admin.order.menunggu.show') ? 'active' : '' }}">
+                    <a href="{{ route('admin.order.menunggu.show') }}">Menunggu</a>
                 </li>
                 <li class="submenu-item ">
                     <a href="extra-component-sweetalert.html">Proses</a>

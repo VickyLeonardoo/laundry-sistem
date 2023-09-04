@@ -64,6 +64,11 @@ Route::prefix('admin')->middleware(['auth:user'])->group(function () {
             Route::post('/jenis-barang/{id}/update','update')->name('admin.jenis.update');
             Route::get('/jenis-barang/{id}/destroy','destroy')->name('admin.jenis.destroy');
         });
+
+        // Order Menunggu Controller
+        Route::controller(App\Http\Controllers\Admin\OrderMenungguController::class)->group(function (){
+            Route::get('/order/menunggu','show')->name('admin.order.menunggu.show');
+        });
     });
 });
 
