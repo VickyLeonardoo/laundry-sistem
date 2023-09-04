@@ -15,10 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users');
             $table->string('trackingNo');
-            $table->enum('statusOrder',['Menunggu Verifikasi','Diproses','Selesai']);
-            $table->enum('statusPembayaran',['Menunggu Pembayaran','Terbayar']);
-            $table->enum('modePembayaran',['Cash On Deal','Online']);
-            $table->foreignId('disocunt_id')->references('id')->on('discounts')->nullable();
+            $table->enum('statusOrder',['Menunggu Verifikasi','Diproses','Selesai'])->defaut('Menunggu Verifikasi');
+            $table->enum('statusPembayaran',['Menunggu Pembayaran','Terbayar'])->nullable();
+            $table->enum('modePembayaran',['Cash On Deal','Online'])->nullable();
+            $table->enum('is_discount',['yes','no'])->default('no');
+            $table->foreignId('discount_id')->nullable();
+            $table->timestamp('tglOrder');
             $table->timestamps();
         });
     }
@@ -26,6 +28,7 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
+
     public function down(): void
     {
         Schema::dropIfExists('orders');

@@ -19,11 +19,15 @@ class RegisterController extends Controller
             'name' => 'required|string',
             'email' => 'required',
             'password' => 'required|min:5',
+            'noHp' => 'required|min:10|max:13',
             'password_confirmation' => 'required|same:password'
         ],[
             'name.required' => 'Nama wajib Diisi',
             'name.string' => 'Nama tidak boleh ada karakter khusus',
             'email.required' => 'Email wajib diisi',
+            'noHp.required' => 'No HP Wajib Diisi',
+            'noHp.min' => 'No Hp Minimal 10 Karakter',
+            'noHp.max' => 'No Hp Maksimal 13 Karakter',
             'password.required' => 'Password wajib diisi',
             'password.min' => 'Password Minimal 5 Karakter',
             'password_confirmation.required' => 'Password konfirmasi wajib diisi',
@@ -37,6 +41,7 @@ class RegisterController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
+            'noHp' => $request->noHp,
             'role' => '1',
             'is_active' => '0'
         ];

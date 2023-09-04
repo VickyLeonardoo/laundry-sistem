@@ -45,6 +45,15 @@
                     @enderror
                 </div>
                 <div class="form-group position-relative has-icon-left mb-4">
+                    <input type="number" class="form-control form-control-xl {{ $errors->has('noHp') ? 'is-invalid':'' }}" value="{{ old('noHp') }}" name="noHp" placeholder="Nomor HP" value="{{ old('noHp') }}">
+                    <div class="form-control-icon">
+                        <i class="bi bi-telephone"></i>
+                    </div>
+                    @error('noHp')
+                        <h6 class="text-danger">{{ $message }}</h6>
+                    @enderror
+                </div>
+                <div class="form-group position-relative has-icon-left mb-4">
                     <input type="password" class="form-control form-control-xl {{ $errors->has('password') ? 'is-invalid':'' }}" value="{{ old('password') }}" name="password" placeholder="Password">
                     <div class="form-control-icon">
                         <i class="bi bi-shield-lock"></i>

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('jenis_barang_id')->references('id')->on('jenis_barangs');
             $table->integer('berat')->nullable();
             $table->integer('harga');
+            $table->timestamp('tglDiantar');
             $table->timestamps();
         });
     }

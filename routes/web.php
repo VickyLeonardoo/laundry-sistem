@@ -64,14 +64,19 @@ Route::prefix('admin')->middleware(['auth:user'])->group(function () {
             Route::post('/jenis-barang/{id}/update','update')->name('admin.jenis.update');
             Route::get('/jenis-barang/{id}/destroy','destroy')->name('admin.jenis.destroy');
         });
-
-
     });
 });
 
 Route::prefix('pelanggan')->middleware(['auth:user'])->group(function () {
     Route::group(['middleware' => ['cek_login:1']], function () {
         Route::get('dashboard',[App\Http\Controllers\Pelanggan\DashboardController::class, 'index'])->name('pelanggan.dashboard');
+
+        Route::controller(App\Http\Controllers\Pelanggan\OrderController::class)->group(function (){
+            Route::get('/order','show')->name('pelanggan.order.show');
+            Route::get('/order/create','create')->name('pelanggan.order.create');
+            Route::post('/order/create/','createTrackno')->name('pelanggan.order.createTrackno');
+            Route::get('/order/{trackingNo}','viewTrack')->name('pelanggan.order.trackno');
+        });
 
     });
 });

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('noHp');
             $table->enum('role',[0,1])->default('1')->comment('0 = Admin, 1 = Pelanggan');
             $table->enum('is_active',['0','1'])->default('0')->comment('0 = Inactive, 1 = Active');
             $table->timestamps();

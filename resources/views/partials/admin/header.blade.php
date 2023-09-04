@@ -99,13 +99,13 @@
     <script src="{{ asset('assets') }}/js/pages/datatables.js"></script>
     <script src="{{ asset('assets') }}/extensions/sweetalert2/sweetalert2.min.js"></script>>
     @if(session('success'))
-    <script>
-        Swal.fire({
-            icon: "success",
-            title: "Success"
-        });
-    </script>
-@endif
+        <script>
+            Swal.fire({
+                icon: "success",
+                title: "Success"
+            });
+        </script>
+    @endif
 </body>
 
 </html>
