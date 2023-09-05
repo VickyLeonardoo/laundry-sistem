@@ -103,7 +103,7 @@
             });
         </script>
     @endif
-    @if(session('trackingNo'))
+    @if(session('transactionNo'))
         <script>
             Swal.fire({
                 icon: "success",

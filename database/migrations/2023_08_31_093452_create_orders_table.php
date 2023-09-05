@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users');
-            $table->string('trackingNo');
+            $table->string('transactionNo');
             $table->enum('statusOrder',['Menunggu Verifikasi','Diproses','Selesai'])->defaut('Menunggu Verifikasi');
             $table->enum('statusPembayaran',['Menunggu Pembayaran','Terbayar'])->nullable();
             $table->enum('modePembayaran',['Cash On Deal','Online'])->nullable();

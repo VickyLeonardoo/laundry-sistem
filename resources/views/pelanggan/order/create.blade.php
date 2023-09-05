@@ -3,7 +3,7 @@
 
 @section('content')
 <section class="row">
-    @if(session('trackingNo'))
+    @if(session('transactionNo'))
         <div class="alert alert-light-success color-success"><i class="bi bi-check-circle"></i>
             Berhasil Menambahkan Orderan, Silahkan Berikan Barang kamu ke petugas Laundry untuk Dilakukan
             Verifikasi.
@@ -22,8 +22,8 @@
                 </div>
                 <div class="card-body">
                     <label>Tracking NO</label>
-                    @if(session('trackingNo'))
-                        <input type="text" class="form-control" value="{{ session('trackingNo') }}"
+                    @if(session('transactionNo'))
+                        <input type="text" class="form-control" value="{{ session('transactionNo') }}"
                             readonly>
                         <br>
                         <div class="alert alert-light-warning color-warning"><i class="bi bi-check-circle"></i>
@@ -39,10 +39,10 @@
                         <input type="text" class="form-control" value="--" readonly>
                         <small class="text-danger">Klik "Get Tracking No" untuk mendapatkan Nomor Tracking</small>
                     @endif
-                    {{-- @if (!$trackingNo)
+                    {{-- @if (!$transactionNo)
                         <input type="text" class="form-control" value="--" readonly>
                     @else
-                        <input type="text" class="form-control" value="{{ $trackingNo }}" readonly>
+                        <input type="text" class="form-control" value="{{ $transactionNo }}" readonly>
                     @endif--}}
                 </div>
             </div>

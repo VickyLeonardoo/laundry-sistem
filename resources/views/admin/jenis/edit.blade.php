@@ -8,9 +8,7 @@
 </div>
 @endif
 <div class="card">
-
     <div class="card-header text-end">
-
         <a href="{{ route('admin.jenis.show') }}" class="btn btn-primary">Back</a>
     </div>
 </div>

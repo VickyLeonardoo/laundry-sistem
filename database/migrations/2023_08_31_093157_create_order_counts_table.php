@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('order_counts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users');
-            $table->integer('totalOrder')->nullable();
+            $table->integer('pointOrder')->nullable();
             $table->timestamps();
         });
     }

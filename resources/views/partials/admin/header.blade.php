@@ -97,7 +97,106 @@
     <script src="{{ asset('assets') }}/extensions/jquery/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.js"></script>
     <script src="{{ asset('assets') }}/js/pages/datatables.js"></script>
-    <script src="{{ asset('assets') }}/extensions/sweetalert2/sweetalert2.min.js"></script>>
+    <script src="{{ asset('assets') }}/extensions/sweetalert2/sweetalert2.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+    const jenis_barang = document.getElementById('jenis_barang');
+    const label_berat = document.getElementById('label_berat');
+    const input_berat = document.querySelector('input[name="berat"]');
+    const label_jmlItem = document.getElementById('label_jmlItem');
+    const input_jmlItem = document.querySelector('input[name="jmlItem"]');
+    const input_harga = document.getElementById('harga');
+
+    jenis_barang.addEventListener('change', function () {
+        const selectedOption = jenis_barang.options[jenis_barang.selectedIndex];
+        const satuan = selectedOption.getAttribute('data-satuan');
+        const harga = selectedOption.getAttribute('data-harga');
+
+        if (satuan === 'KG') {
+            label_berat.style.display = 'block';
+            input_berat.style.display = 'block';
+            label_jmlItem.style.display = 'none';
+            input_jmlItem.style.display = 'none';
+            input_harga.value = '';
+        } else if (satuan === 'Item') {
+            label_berat.style.display = 'none';
+            input_berat.style.display = 'none';
+            label_jmlItem.style.display = 'block';
+            input_jmlItem.style.display = 'block';
+            if (input_jmlItem.value === '') {
+                input_harga.value = '0';
+            } else {
+                input_harga.value = harga;
+            }
+        }
+    });
+
+    input_berat.addEventListener('input', function () {
+        const selectedOption = jenis_barang.options[jenis_barang.selectedIndex];
+        const satuan = selectedOption.getAttribute('data-satuan');
+        const harga = selectedOption.getAttribute('data-harga');
+        const berat = parseFloat(input_berat.value) || 0;
+        input_harga.value = (satuan === 'KG') ? harga * berat : '';
+    });
+
+    input_jmlItem.addEventListener('input', function () {
+        const selectedOption = jenis_barang.options[jenis_barang.selectedIndex];
+        const satuan = selectedOption.getAttribute('data-satuan');
+        const harga = selectedOption.getAttribute('data-harga');
+        const jmlItem = parseInt(input_jmlItem.value) || 0;
+        input_harga.value = (satuan === 'Item') ? harga * jmlItem : '0';
+    });
+});
+
+    </script>
+    {{-- <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const jenisBarangDropdown = document.getElementById("jenis_barang");
+            const beratInput = document.getElementById("berat");
+            const jmlItemInput = document.getElementById("jmlItem");
+            const hargaInput = document.getElementById("harga");
+
+            jenisBarangDropdown.addEventListener("change", function () {
+                const selectedOption = jenisBarangDropdown.options[jenisBarangDropdown.selectedIndex];
+                const satuan = selectedOption.getAttribute("data-satuan");
+                const hargaPerUnit = selectedOption.getAttribute("data-harga"); // Menambahkan atribut data-harga ke setiap opsi pada dropdown
+
+                if (satuan === "KG" && beratInput.value !== "") {
+                    const berat = parseFloat(beratInput.value);
+                    hargaInput.value = (hargaPerUnit * berat).toFixed(2); // Menghitung harga berdasarkan berat
+                } else if (satuan === "Item" && jmlItemInput.value !== "") {
+                    const jumlahItem = parseInt(jmlItemInput.value);
+                    hargaInput.value = (hargaPerUnit * jumlahItem).toFixed(2); // Menghitung harga berdasarkan jumlah item
+                } else {
+                    hargaInput.value = ""; // Jika tidak ada satuan yang dipilih atau berat/jumlah item kosong, set harga ke kosong
+                }
+            });
+
+            // Event listener untuk input berat (jika ada)
+            beratInput.addEventListener("input", function () {
+                const selectedOption = jenisBarangDropdown.options[jenisBarangDropdown.selectedIndex];
+                const satuan = selectedOption.getAttribute("data-satuan");
+                const hargaPerUnit = selectedOption.getAttribute("data-harga");
+
+                if (satuan === "KG" && beratInput.value !== "") {
+                    const berat = parseFloat(beratInput.value);
+                    hargaInput.value = (hargaPerUnit * berat).toFixed(2);
+                }
+            });
+
+            // Event listener untuk input jumlah item (jika ada)
+            jmlItemInput.addEventListener("input", function () {
+                const selectedOption = jenisBarangDropdown.options[jenisBarangDropdown.selectedIndex];
+                const satuan = selectedOption.getAttribute("data-satuan");
+                const hargaPerUnit = selectedOption.getAttribute("data-harga");
+
+                if (satuan === "Item" && jmlItemInput.value !== "") {
+                    const jumlahItem = parseInt(jmlItemInput.value);
+                    hargaInput.value = (hargaPerUnit * jumlahItem).toFixed(2);
+                }
+            });
+        });
+    </script> --}}
     @if(session('success'))
         <script>
             Swal.fire({
@@ -106,6 +205,8 @@
             });
         </script>
     @endif
+
+
 </body>
 
 </html>

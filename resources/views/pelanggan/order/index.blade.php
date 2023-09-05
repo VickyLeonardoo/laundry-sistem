@@ -28,7 +28,7 @@
                                 @foreach ($orders as $order)
                                     <tr>
                                         <td>1</td>
-                                        <td>{{ $order->trackingNo }}</td>
+                                        <td>{{ $order->transactionNo }}</td>
                                         <td>
                                             @if ($order->statusOrder == 'Menunggu Verifikasi')
                                                 <span class="badge bg-light-warning">Menunggu Verifikasi</span>
@@ -39,7 +39,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('pelanggan.order.trackno',$order->trackingNo) }}" class="btn btn-primary btm-sm">Cek</a>
+                                            <a href="{{ route('pelanggan.order.trackno',$order->transactionNo) }}" class="btn btn-primary btm-sm">Cek</a>
                                         </td>
                                     </tr>
                                 @endforeach

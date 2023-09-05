@@ -1,19 +1,25 @@
-@extends('partials.pelanggan.header')
-@section('title','')
+@extends('partials.admin.header')
+@section('title','Edit Orderan')
 
 @section('content')
+@if ($order)
 <section class="row">
-    @if ($order)
     <div class="card">
         <div class="card-header">
-            <h4>{{ $order->transactionNo }}</h4>
+            <div class="row">
+                <div class="col-12 col-lg-9">
+                    <h4>{{ $order->transactionNo }}</h4>
+                </div>
+            </div>
         </div>
         <div class="card-body">
-            <div class="row">
+            <form action="{{ route('admin.order.menunggu.transaction.proses',$transactionNo) }}" method="POST">
+                <div class="row">
+                @csrf
                 <div class="col-12 col-xl-6">
                     <div class="form-group">
                         <label>Nama:</label>
-                        <input type="text" class="form-control" readonly value="{{ auth()->user()->name }}">
+                        <input type="text" class="form-control" readonly value="{{ $order->user->name }}">
                     </div>
                     <div class="form-group">
                         <label>Metode Pembayaran:</label>
@@ -44,19 +50,25 @@
                     @if ($order->statusOrder == 'Diproses')
                         <a href="#" class="btn btn-primary form-control">Proses Pembayaran</a>
                     @endif
+                    <div class="form-group">
+                        <input type="submit" value="Proses" class="btn btn-primary form-control">
+                    </div>
                 </div>
+            </form>
+
             </div>
         </div>
     </div>
-    @if (!$orderItem)
-        <div class="alert alert-light-warning color-warning"><i class="bi bi-check-circle"></i>
-            Berhasil Membuat Orderan, Silahkan Berikan Barang kamu ke petugas Laundry untuk Dilakukan
-            Penambahan Item Orderan.
-        </div>
-    @endif
     <div class="card">
         <div class="card-header">
-            <h3>Daftar Item</h3>
+            <div class="row">
+                <div class="col-12 col-lg-9">
+                    <h4>Daftar Item</h4>
+                </div>
+                <div class="col-12 col-lg-3 text-end">
+                    <a href="{{ route('admin.order.menunggu.transaction.create',$order->transactionNo) }}" class="btn btn-primary">Tambah Data Orderan</a>
+                </div>
+            </div>
         </div>
         <div class="card-body">
             <table class="table" id="table1">
@@ -176,9 +188,9 @@
             </table>
         </div>
     </div>
-
-    @else
-    <h3>No Transaction No Found</h3>
-    @endif
 </section>
+@else
+<h2>NO Order Found</h2>
+@endif
+
 @endsection

@@ -3,6 +3,10 @@
 @section('title','Orderan Menunggu Verifikasi')
 
 @section('content')
+<div class="alert alert-light-success color-success"><i class="bi bi-check-circle"></i>
+    Order Berhasil Diproses
+</div>
+
 <div class="card">
     <div class="card-header text-end">
         <a href="{{ route('admin.discount.create') }}" class="btn btn-primary">Tambah</a>
@@ -26,10 +30,10 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $order->user->name }}</td>
                         <td>{{ $order->user->noHp }}</td>
-                        <td>{{ $order->trackingNo }}</td>
+                        <td>{{ $order->transactionNo }}</td>
                         <td>{{ \Carbon\Carbon::parse($order->tglOrder)->isoFormat('D MMMM Y, H:m') }}</td>
                         <td>
-                            <a href="" class="btn btn-primary">Periksa</a>
+                            <a href="{{ route('admin.order.menunggu.transaction.edit',$order->transactionNo) }}" class="btn btn-primary">Periksa</a>
                             <a href="" class="btn btn-danger">Hapus</a>
                         </td>
                     </tr>

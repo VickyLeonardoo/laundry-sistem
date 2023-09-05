@@ -68,6 +68,11 @@ Route::prefix('admin')->middleware(['auth:user'])->group(function () {
         // Order Menunggu Controller
         Route::controller(App\Http\Controllers\Admin\OrderMenungguController::class)->group(function (){
             Route::get('/order/menunggu','show')->name('admin.order.menunggu.show');
+            Route::get('/order/menunggu/{transactionNo}/edit' ,'edit')->name('admin.order.menunggu.transaction.edit');
+            Route::post('/order/menunggu/{transactionNo}/proses' ,'proses')->name('admin.order.menunggu.transaction.proses');
+            Route::get('/order/menunggu/{transactionNo}/create/order-item' ,'createOrderItem')->name('admin.order.menunggu.transaction.create');
+            Route::post('/order/menunggu/{id}/create/order-item' ,'storeOrderItem')->name('admin.order.menunggu.transaction.store');
+
         });
     });
 });
@@ -80,7 +85,7 @@ Route::prefix('pelanggan')->middleware(['auth:user'])->group(function () {
             Route::get('/order','show')->name('pelanggan.order.show');
             Route::get('/order/create','create')->name('pelanggan.order.create');
             Route::post('/order/create/','createTrackno')->name('pelanggan.order.createTrackno');
-            Route::get('/order/{trackingNo}','viewTrack')->name('pelanggan.order.trackno');
+            Route::get('/order/{transactionNo}','viewTrack')->name('pelanggan.order.trackno');
         });
 
     });
