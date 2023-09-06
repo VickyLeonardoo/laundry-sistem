@@ -18,7 +18,7 @@
         <div class="row">
             <div class="card">
                 <div class="card-header text-end">
-                    <a href="{{ route('pelanggan.order.show') }}" class="btn btn-primary ">Back</a>
+                    <a href="{{ route('pelanggan.order.show') }}" class="btn btn-primary "><i class="fas fa-left-arrow"></i>Back</a>
                 </div>
                 <div class="card-body">
                     <label>Tracking NO</label>

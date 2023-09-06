@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Pelanggan;
 
+use Midtrans\Snap;
 use App\Models\Order;
+use App\Models\Orderitem;
+use App\Models\Snaptoken;
+use App\Models\OrderCount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
-use App\Models\Orderitem;
-use App\Models\Snaptoken;
-use Midtrans\Snap;
 
 class OrderController extends Controller
 {
@@ -65,6 +66,7 @@ class OrderController extends Controller
         $orderItems = Orderitem::where('order_id',$order->id)->get();
         $orderItem = Orderitem::where('order_id',$order->id)->first();
         $snapTokenGet = Snaptoken::where('order_id',$order->id)->first();
+        $snapToken = NULL;
         // $snapToken = $snapTokens->snapToken;
         $totalHarga = 0;
         foreach ($orderItems as $item) {
@@ -106,13 +108,23 @@ class OrderController extends Controller
             }
             return view('pelanggan.order.trackno', compact('order','orderItem','totalHarga','snapToken'));
         }else{
-            return 'false';
+            $order->update([
+                'modePembayaran' => 'Cash On Deal'
+            ]);
+            return view('pelanggan.order.trackno', compact('order','orderItem','totalHarga','snapToken'));
+
         }
     }
 
     public function callback(Request $request){
         $serverKey = config('midtrans.server_key');
         $hashed = hash("sha512", $request->order_id.$request->status_code.$request->gross_amount.$serverKey);
+        $totalBerat = 0;
+        $totalItem = 0;
+        $pointKg = 0;
+        $pointItem = 0;
+        $pointOrder = 0;
+
         if ($hashed == $request->signature_key) {
             if ($request->transaction_status == 'capture') {
                 $order = Order::find($request->order_id);
@@ -120,5 +132,27 @@ class OrderController extends Controller
             }
             Snaptoken::where('order_id',$order->id)->delete();
         }
+        foreach ($order->orderitem as $orderList) {
+            if ($orderList->jenis->satuan == 'KG') {
+                $totalBerat += $orderList->jumlah;
+            } else {
+                $totalItem += $orderList->jumlah;
+            }
+            $pointKg = floor($totalBerat / 5) * 2;
+            $pointItem = $totalItem * 3;
+            $pointOrder = $pointKg + $pointItem;
+        }
+        $countPoint = OrderCount::where('user_id',$order->user_id)->first();
+        if (!$countPoint) {
+            OrderCount::create([
+                'user_id' => $order->user_id,
+                'pointOrder' => $pointOrder,
+            ]);
+        }else{
+            $countPoint->update([
+                'pointOrder' => $countPoint->pointOrder + $pointOrder,
+            ]);
+        }
+
     }
 }

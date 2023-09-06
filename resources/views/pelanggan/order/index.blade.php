@@ -35,7 +35,7 @@
                                             @elseif ($order->statusOrder == 'Diproses')
                                                 <span class="badge bg-light-info">Diproses</span>
                                             @else
-                                                <span class="badge bg-light-warning">Selesai</span>
+                                                <span class="badge bg-light-success">Selesai</span>
                                             @endif
                                         </td>
                                         <td>

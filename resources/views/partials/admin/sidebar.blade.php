@@ -33,20 +33,20 @@
             </ul>
         </li>
 
-        <li class="sidebar-item  has-sub">
+        <li class="sidebar-item has-sub {{ Route::is('admin.order.menunggu.*','admin.order.diproses.*','admin.order.selesai.*') ? 'active':'' }}">
             <a href="#" class='sidebar-link'>
                 <i class="bi bi-collection-fill"></i>
                 <span>Order List</span>
             </a>
-            <ul class="submenu {{ Route::is('admin.order.menunggu.*') ? 'active':'' }}">
-                <li class="submenu-item {{ Route::is('admin.order.menunggu.show') ? 'active' : '' }}">
+            <ul class="submenu {{ Route::is('admin.order.menunggu.*','admin.order.diproses.*','admin.order.selesai.*') ? 'active':'' }}">
+                <li class="submenu-item {{ Route::is('admin.order.menunggu.*') ? 'active' : '' }}">
                     <a href="{{ route('admin.order.menunggu.show') }}">Menunggu</a>
                 </li>
-                <li class="submenu-item ">
-                    <a href="extra-component-sweetalert.html">Proses</a>
+                <li class="submenu-item {{ Route::is('admin.order.diproses.*') ? 'active':'' }}">
+                    <a href="{{ route('admin.order.diproses.show') }}">Proses</a>
                 </li>
-                <li class="submenu-item ">
-                    <a href="extra-component-toastify.html">Selesai</a>
+                <li class="submenu-item {{ Route::is('admin.order.selesai.*') ? 'active':'' }}">
+                    <a href="{{ route('admin.order.selesai.show') }}">Selesai</a>
                 </li>
             </ul>
         </li>

@@ -57,37 +57,10 @@ class OrderMenungguController extends Controller
         $pointItem = 0;
         $pointOrder = 0;
         $order = Order::where('transactionNo', $transactionNo)->first();
-        foreach ($order->orderitem as $orderList) {
-            if ($orderList->jenis->satuan == 'KG') {
-                $totalBerat += $orderList->jumlah;
-            } else {
-                $totalItem += $orderList->jumlah;
-            }
-            $pointKg = floor($totalBerat / 5) * 2;
-            $pointItem = $totalItem * 3;
-            $pointOrder = $pointKg + $pointItem;
-        }
-        $countPoint = OrderCount::where('id',$order->user_id)->first();
-        if (!$countPoint) {
-            OrderCount::create([
-                'user_id' => $order->user_id,
-                'pointOrder' => $pointOrder,
-            ]);
-            $order->update([
-                'statusOrder' => 'Diproses',
-                'statusPembayaran' => 'Menunggu Pembayaran',
-            ]);
-            return redirect()->route('admin.order.menunggu.show')->with('success',true);
-        }else{
-            $order->update([
-                'statusOrder' => 'Diproses',
-                'statusPembayaran' => 'Menunggu Pembayaran',
-
-            ]);
-            $countPoint->update([
-                'pointOrder' => $countPoint->pointOrder + $pointOrder,
-            ]);
-            return redirect()->route('admin.order.menunggu.show')->with('success',true);
-        }
+        $order->update([
+            'statusOrder' => 'Diproses',
+            'statusPembayaran' => 'Menunggu Pembayaran',
+        ]);
+        return redirect()->route('admin.order.menunggu.show')->with('success',true);
     }
 }

@@ -12,13 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->id();
+            $table->id()->startingValue(15);
             $table->foreignId('user_id')->references('id')->on('users');
             $table->string('transactionNo');
             $table->enum('statusOrder',['Menunggu Verifikasi','Diproses','Selesai'])->defaut('Menunggu Verifikasi');
             $table->enum('statusPembayaran',['Menunggu Pembayaran','Terbayar'])->nullable();
             $table->enum('modePembayaran',['Cash On Deal','Online'])->nullable();
             $table->enum('is_discount',['yes','no'])->default('no');
+            $table->enum('is_taken',['yes','no'])->default('no');
             $table->foreignId('discount_id')->nullable();
             $table->timestamp('tglOrder')->nullable();
             $table->timestamps();

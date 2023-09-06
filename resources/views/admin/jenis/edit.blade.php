@@ -9,7 +9,7 @@
 @endif
 <div class="card">
     <div class="card-header text-end">
-        <a href="{{ route('admin.jenis.show') }}" class="btn btn-primary">Back</a>
+        <a href="{{ route('admin.jenis.show') }}" class="btn btn-primary"><i class="fas fa-left-arrow"></i>Back</a>
     </div>
 </div>
 

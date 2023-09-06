@@ -1,9 +1,15 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\OtpController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Admin\OutletController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Admin\DiscountController;
+use App\Http\Controllers\Admin\JenisbarangController;
+use App\Http\Controllers\Admin\OrderProsesController;
+use App\Http\Controllers\Admin\OrderSelesaiController;
+use App\Http\Controllers\Admin\OrderMenungguController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +43,7 @@ Route::prefix('admin')->middleware(['auth:user'])->group(function () {
         Route::get('dashboard',[App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
 
         // Outlet
-        Route::controller(App\Http\Controllers\Admin\OutletController::class)->group(function (){
+        Route::controller(OutletController::class)->group(function (){
             Route::get('/outlet','show')->name('admin.outlet.show');
             Route::get('/outlet/create','create')->name('admin.outlet.create');
             Route::post('/outlet','store')->name('admin.outlet.store');
@@ -47,7 +53,7 @@ Route::prefix('admin')->middleware(['auth:user'])->group(function () {
         });
 
         // Discount
-        Route::controller(App\Http\Controllers\Admin\DiscountController::class)->group(function (){
+        Route::controller(DiscountController::class)->group(function (){
             Route::get('/discount','show')->name('admin.discount.show');
             Route::get('/discount/create','create')->name('admin.discount.create');
             Route::post('/discount','store')->name('admin.discount.store');
@@ -57,7 +63,7 @@ Route::prefix('admin')->middleware(['auth:user'])->group(function () {
         });
 
         // Tipe Orderan
-        Route::controller(App\Http\Controllers\Admin\JenisbarangController::class)->group(function (){
+        Route::controller(JenisbarangController::class)->group(function (){
             Route::get('/jenis-barang','show')->name('admin.jenis.show');
             Route::get('/jenis-barang/create','create')->name('admin.jenis.create');
             Route::post('/jenis-barang','store')->name('admin.jenis.store');
@@ -67,14 +73,27 @@ Route::prefix('admin')->middleware(['auth:user'])->group(function () {
         });
 
         // Order Menunggu Controller
-        Route::controller(App\Http\Controllers\Admin\OrderMenungguController::class)->group(function (){
+        Route::controller(OrderMenungguController::class)->group(function (){
             Route::get('/order/menunggu','show')->name('admin.order.menunggu.show');
             Route::get('/order/menunggu/{transactionNo}/edit' ,'edit')->name('admin.order.menunggu.transaction.edit');
             Route::post('/order/menunggu/{transactionNo}/proses' ,'proses')->name('admin.order.menunggu.transaction.proses');
             Route::get('/order/menunggu/{transactionNo}/create/order-item' ,'createOrderItem')->name('admin.order.menunggu.transaction.create');
             Route::post('/order/menunggu/{id}/create/order-item' ,'storeOrderItem')->name('admin.order.menunggu.transaction.store');
-
         });
+
+        Route::controller(OrderProsesController::class)->group(function (){
+            Route::get('/order/diproses','show')->name('admin.order.diproses.show');
+            Route::get('/order/diproses/{transactionNo}/edit' ,'edit')->name('admin.order.diproses.transaction.edit');
+            Route::post('/order/diproses/{id}/selesai' ,'selesai')->name('admin.order.diproses.selesai.order');
+            Route::post('/order/diproses/{id}/pembayaranSelesai' ,'pembayaranSelesai')->name('admin.order.diproses.selesai.pembayaran');
+        });
+
+        Route::controller(OrderSelesaiController::class)->group(function (){
+            Route::get('/order/selesai', 'show')->name('admin.order.selesai.show');
+            Route::get('/order/selesai/{transactionNo}/edit' ,'edit')->name('admin.order.selesai.transaction.edit');
+            Route::post('/orderan/selesai/{id}/diterima', 'orderanDiterima')->name('admin.order.selesai.diterima');
+        });
+
     });
 });
 

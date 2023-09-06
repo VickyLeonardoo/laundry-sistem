@@ -11,7 +11,7 @@
 
     <div class="card-header text-end">
 
-        <a href="{{ route('admin.discount.show') }}" class="btn btn-primary">Back</a>
+        <a href="{{ route('admin.discount.show') }}" class="btn btn-primary"><i class="fas fa-left-arrow"></i>Back</a>
     </div>
 </div>
 

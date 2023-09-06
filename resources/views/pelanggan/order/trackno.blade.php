@@ -10,7 +10,7 @@
                     <h4>{{ $order->transactionNo }}</h4>
                 </div>
                 <div class="col-12 col-xl-3 text-end">
-                    <a href="{{ route('pelanggan.order.show') }}" class="btn btn-primary ">Back</a>
+                    <a href="{{ route('pelanggan.order.show') }}" class="btn btn-primary "><i class="fas fa-left-arrow"></i>Back</a>
                 </div>
             </div>
         </div>
@@ -20,10 +20,19 @@
         <div class="card-header">
         </div>
         <div class="card-body">
-            @if ($order->statusPembayaran == 'Terbayar')
+            @if ($order->statusPembayaran == 'Terbayar' && $order->statusOrder == 'Diproses')
                 <div class="alert alert-light-success color-success"><i class="bi bi-check-circle"></i>
                     Terima Kasih. Kamu Telah Melakukan Pembayaran, Silahkan Tunggu Hingga Orderan Kamu Selesai Diproses.
                 </div>
+            @elseif ($order->statusPembayaran == 'Terbayar' && $order->statusOrder == 'Selesai')
+                <div class="alert alert-light-success color-success"><i class="bi bi-check-circle"></i>
+                    Orderan Kamu Telah Selesai, Silahkan ke Outlet untuk mengambil Orderan Kamu. Poin akan ditambahkan ketika kamu telah mengambil Orderan.
+                </div>
+            @elseif ($order->statusPembayaran == 'Menunggu Pembayaran' && $order->modePembayaran == 'Cash On Deal' && $order->statusOrder == 'Selesai')
+                <div class="alert alert-light-warning color-warning"><i class="bi bi-exclamation-circle"></i>
+                    Orderan Kamu Telah Selesai, kamu Memilih Metode Pembayaran Cash On Deal, Silahkan Membayar Di Kasir dan Ambil Orderan Anda.
+                </div>
+
             @endif
             <form action="{{ route('pelanggan.order.metode',$order->id) }}" method="POST">
                 @csrf
@@ -59,11 +68,12 @@
                             </div>
                         @endif
                         <div class="form-group">
-                            <label>Status Pembayaran:</label>
                             @if ($order->statusOrder == 'Menunggu Verifikasi')
+                            <label>Status Pembayaran:</label>
                                 <input type="text" class="form-control" readonly disabled value="--">
                             @elseif ($order->statusOrder == 'Diproses')
-                                    <input type="text" class="form-control" readonly disabled value="{{ $order->statusPembayaran }}">
+                                <label>Status Pembayaran:</label>
+                                <input type="text" class="form-control" readonly disabled value="{{ $order->statusPembayaran }}">
                             @endif
                         </div>
                         @if ($totalHarga != 0)
@@ -73,6 +83,8 @@
                             </div>
                         @endif
                         @if ($order->statusOrder == 'Diproses' && $order->modePembayaran != 'Online')
+                            <button type="submit" class="btn btn-primary form-control">Pilih Metode</button>
+                        @elseif ($order->statusOrder == 'Selesai' && $order->modePembayaran != 'Online' && $order->modePembayaran != 'Cash On Deal')
                             <button type="submit" class="btn btn-primary form-control">Pilih Metode</button>
                         @endif
                     </div>
