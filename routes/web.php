@@ -22,6 +22,7 @@ Route::get('/register', function(){
     return view('auth.register');
 });
 
+Route::get('/',[LoginController::class,'show']);
 Route::get('/login',[LoginController::class,'show'])->name('login');
 Route::get('/logout',[LoginController::class,'logout'])->name('logout');
 Route::post('/simpan-pendaftaran',[RegisterController::class,'store'])->name('simpan.pendaftaran');

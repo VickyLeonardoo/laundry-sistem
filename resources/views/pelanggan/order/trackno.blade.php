@@ -20,6 +20,11 @@
         <div class="card-header">
         </div>
         <div class="card-body">
+            @if ($order->statusPembayaran == 'Terbayar')
+                <div class="alert alert-light-success color-success"><i class="bi bi-check-circle"></i>
+                    Terima Kasih. Kamu Telah Melakukan Pembayaran, Silahkan Tunggu Hingga Orderan Kamu Selesai Diproses.
+                </div>
+            @endif
             <form action="{{ route('pelanggan.order.metode',$order->id) }}" method="POST">
                 @csrf
                 <div class="row">
@@ -31,18 +36,28 @@
                         <div class="form-group">
                             <label>Tanggal Order:</label>
                             <input type="text" readonly disabled class="form-control" value="{{ \Carbon\Carbon::parse($order->tglOrder)->isoFormat('D MMMM Y') }}">
-                            {{-- <input type="text" class="form-control" value="{{ $order->tglOrder }}"> --}}
+                        </div>
+                        <div class="form-group">
+                            <label>Status Order:</label>
+                            <input type="text" readonly disabled class="form-control" value="{{ $order->statusOrder }}">
                         </div>
                     </div>
                     <div class="col-12 col-xl-6">
-                        <div class="form-group">
-                            <label>Metode Pembayaran:</label>
-                            <select name="modePembayaran"  class="form-control">
-                                <option value="" @readonly(true) disabled selected>Pilih Metode Pembayaran</option>
-                                <option value="Cash On Deal">Cash On Deal</option>
-                                <option value="Online">Online</option>
-                            </select>
-                        </div>
+                        @if ($order->modePembayaran != NULL)
+                            <div class="form-group">
+                                <label>Metode Pembayaran:</label>
+                                <input type="text" value="{{ $order->modePembayaran }}" class="form-control" readonly disabled>
+                            </div>
+                        @else
+                            <div class="form-group">
+                                <label>Metode Pembayaran:</label>
+                                <select name="modePembayaran" class="form-control">
+                                    <option value="" @readonly(true) disabled selected>Pilih Metode Pembayaran</option>
+                                    <option value="Cash On Deal" {{ $order->modePembayaran == 'Cash On Deal'? 'selected':''}}>Cash On Deal</option>
+                                    <option value="Online" {{ $order->modePembayaran == 'Online'? 'selected':''}} >Online</option>
+                                </select>
+                            </div>
+                        @endif
                         <div class="form-group">
                             <label>Status Pembayaran:</label>
                             @if ($order->statusOrder == 'Menunggu Verifikasi')
@@ -54,7 +69,7 @@
                         @if ($totalHarga != 0)
                             <div class="form-group">
                                 <label for="">Total Pembayaran</label>
-                                <input type="text" class="form-control" readonly disabled value="Rp. {{ $totalHarga }}">
+                                <input type="text" class="form-control" readonly disabled value="@currency($totalHarga)">
                             </div>
                         @endif
                         @if ($order->statusOrder == 'Diproses' && $order->modePembayaran != 'Online')
@@ -63,7 +78,7 @@
                     </div>
                 </div>
             </form>
-            @if ($order->statusOrder == 'Diproses' && $order->modePembayaran == 'Online')
+            @if ($order->statusOrder == 'Diproses' && $order->modePembayaran == 'Online' && $order->statusPembayaran == 'Menunggu Pembayaran')
                 <div class="row">
                     <div class="col-12 col-xl-6">
                     </div>
