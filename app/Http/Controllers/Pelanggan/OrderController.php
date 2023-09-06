@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
 use App\Models\Orderitem;
+use App\Models\Snaptoken;
+use Midtrans\Snap;
 
 class OrderController extends Controller
 {
@@ -42,9 +44,69 @@ class OrderController extends Controller
         }
     }
 
-    public function viewTrack($transactionNo){
+    public function viewTrack(Request $request, $transactionNo){
         $order = Order::where('transactionNo',$transactionNo)->first();
         $orderItem = Orderitem::where('order_id',$order->id)->first();
-        return view('pelanggan.order.trackno', compact('order','orderItem'));
+        $orderItems = Orderitem::where('order_id',$order->id)->get();
+        $snapTokenGet = Snaptoken::where('order_id',$order->id)->first();
+        $snapToken = 0;
+        if ($snapTokenGet) {
+            $snapToken = $snapTokenGet->snapToken;
+        }
+        $totalHarga = 0;
+        foreach ($orderItems as $item) {
+            $totalHarga += $item->harga;
+        }
+        return view('pelanggan.order.trackno', compact('order','orderItem','totalHarga','snapToken'));
+    }
+
+    public function updateMetode(Request $request, $id){
+        $order = Order::findOrFail($id);
+        $orderItems = Orderitem::where('order_id',$order->id)->get();
+        $orderItem = Orderitem::where('order_id',$order->id)->first();
+        $snapTokenGet = Snaptoken::where('order_id',$order->id)->first();
+        // $snapToken = $snapTokens->snapToken;
+        $totalHarga = 0;
+        foreach ($orderItems as $item) {
+            $totalHarga += $item->harga;
+        }
+        if ($request->modePembayaran == 'Online') {
+            $order->update([
+                'modePembayaran' => 'Online'
+            ]);
+            // Set your Merchant Server Key
+            \Midtrans\Config::$serverKey = config('midtrans.server_key');
+            // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+            \Midtrans\Config::$isProduction = false;
+            // Set sanitization on (default)
+            \Midtrans\Config::$isSanitized = true;
+            // Set 3DS transaction for credit card to true
+            \Midtrans\Config::$is3ds = true;
+
+            $params = array(
+                'transaction_details' => array(
+                    'order_id' => $order->id,
+                    'gross_amount' => $totalHarga,
+                ),
+                'customer_details' => array(
+                    'name' => auth()->user()->name,
+                    'phone' => auth()->user()->noHp,
+                ),
+            );
+            $snapToken = \Midtrans\Snap::getSnapToken($params);
+            if (!$snapTokenGet) {
+                Snaptoken::create([
+                    'order_id' => $order->id,
+                    'snapToken' => $snapToken,
+                ]);
+            }else{
+                $snapTokenGet->update([
+                    'snapToken' => $snapToken
+                ]);
+            }
+            return view('pelanggan.order.trackno', compact('order','orderItem','totalHarga','snapToken'));
+        }else{
+            return 'false';
+        }
     }
 }

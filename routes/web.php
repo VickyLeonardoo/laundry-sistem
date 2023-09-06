@@ -86,6 +86,7 @@ Route::prefix('pelanggan')->middleware(['auth:user'])->group(function () {
             Route::get('/order/create','create')->name('pelanggan.order.create');
             Route::post('/order/create/','createTrackno')->name('pelanggan.order.createTrackno');
             Route::get('/order/{transactionNo}','viewTrack')->name('pelanggan.order.trackno');
+            Route::post('/order/{id}/metode-pembayaran','updateMetode')->name('pelanggan.order.metode');
         });
 
     });

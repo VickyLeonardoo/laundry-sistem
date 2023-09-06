@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('modePembayaran',['Cash On Deal','Online'])->nullable();
             $table->enum('is_discount',['yes','no'])->default('no');
             $table->foreignId('discount_id')->nullable();
-            $table->timestamp('tglOrder');
+            $table->timestamp('tglOrder')->nullable();
             $table->timestamps();
         });
     }

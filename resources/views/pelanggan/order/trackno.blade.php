@@ -3,51 +3,78 @@
 
 @section('content')
 <section class="row">
-    @if ($order)
     <div class="card">
-        <div class="card-header">
-            <h4>{{ $order->transactionNo }}</h4>
-        </div>
-        <div class="card-body">
+        <div class="card-header ">
             <div class="row">
-                <div class="col-12 col-xl-6">
-                    <div class="form-group">
-                        <label>Nama:</label>
-                        <input type="text" class="form-control" readonly value="{{ auth()->user()->name }}">
-                    </div>
-                    <div class="form-group">
-                        <label>Metode Pembayaran:</label>
-                        <select name="statusOrder" class="form-control">
-                            <option value="" @readonly(true) disabled selected>Pilih Metode Pembayaran</option>
-                            <option value="Cash On Deal">Cash On Deal</option>
-                            <option value="Online">Online</option>
-                        </select>
-                    </div>
+                <div class="col-12 col-xl-9">
+                    <h4>{{ $order->transactionNo }}</h4>
                 </div>
-                <div class="col-12 col-xl-6">
-                    <div class="form-group">
-                        <label>Tanggal Order:</label>
-                        <input type="text" class="form-control" value="{{ \Carbon\Carbon::parse($order->tglOrder)->isoFormat('D MMMM Y') }}">
-                        {{-- <input type="text" class="form-control" value="{{ $order->tglOrder }}"> --}}
-                    </div>
-                    <div class="form-group">
-                        <label>Status Pembayaran:</label>
-                        @if ($order->statusOrder == 'Menunggu Verifikasi')
-                            <input type="text" class="form-control" readonly value="--">
-                        @elseif ($order->statusOrder == 'Diproses')
-                            <select name="statusPembayaran" class="form-control">
-                                <option value="Menunggu Pembayaran">Menunggu Pembayaran</option>
-                                <option value="Terbayar">Terbayar</option>
-                            </select>
-                        @endif
-                    </div>
-                    @if ($order->statusOrder == 'Diproses')
-                        <a href="#" class="btn btn-primary form-control">Proses Pembayaran</a>
-                    @endif
+                <div class="col-12 col-xl-3 text-end">
+                    <a href="{{ route('pelanggan.order.show') }}" class="btn btn-primary ">Back</a>
                 </div>
             </div>
         </div>
     </div>
+    @if ($order)
+    <div class="card">
+        <div class="card-header">
+        </div>
+        <div class="card-body">
+            <form action="{{ route('pelanggan.order.metode',$order->id) }}" method="POST">
+                @csrf
+                <div class="row">
+                    <div class="col-12 col-xl-6">
+                        <div class="form-group">
+                            <label>Nama:</label>
+                            <input type="text" disabled class="form-control" readonly value="{{ auth()->user()->name }}">
+                        </div>
+                        <div class="form-group">
+                            <label>Tanggal Order:</label>
+                            <input type="text" readonly disabled class="form-control" value="{{ \Carbon\Carbon::parse($order->tglOrder)->isoFormat('D MMMM Y') }}">
+                            {{-- <input type="text" class="form-control" value="{{ $order->tglOrder }}"> --}}
+                        </div>
+                    </div>
+                    <div class="col-12 col-xl-6">
+                        <div class="form-group">
+                            <label>Metode Pembayaran:</label>
+                            <select name="modePembayaran"  class="form-control">
+                                <option value="" @readonly(true) disabled selected>Pilih Metode Pembayaran</option>
+                                <option value="Cash On Deal">Cash On Deal</option>
+                                <option value="Online">Online</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Status Pembayaran:</label>
+                            @if ($order->statusOrder == 'Menunggu Verifikasi')
+                                <input type="text" class="form-control" readonly disabled value="--">
+                            @elseif ($order->statusOrder == 'Diproses')
+                                    <input type="text" class="form-control" readonly disabled value="{{ $order->statusPembayaran }}">
+                            @endif
+                        </div>
+                        @if ($totalHarga != 0)
+                            <div class="form-group">
+                                <label for="">Total Pembayaran</label>
+                                <input type="text" class="form-control" readonly disabled value="Rp. {{ $totalHarga }}">
+                            </div>
+                        @endif
+                        @if ($order->statusOrder == 'Diproses' && $order->modePembayaran != 'Online')
+                            <button type="submit" class="btn btn-primary form-control">Pilih Metode</button>
+                        @endif
+                    </div>
+                </div>
+            </form>
+            @if ($order->statusOrder == 'Diproses' && $order->modePembayaran == 'Online')
+                <div class="row">
+                    <div class="col-12 col-xl-6">
+                    </div>
+                    <div class="col-12 col-xl-6">
+                        <button id="pay-button" class="btn btn-primary form-control">Proses Pembayaran!</button>
+                    </div>
+                </div>
+            @endif
+        </div>
+    </div>
+
     @if (!$orderItem)
         <div class="alert alert-light-warning color-warning"><i class="bi bi-check-circle"></i>
             Berhasil Membuat Orderan, Silahkan Berikan Barang kamu ke petugas Laundry untuk Dilakukan
@@ -89,10 +116,10 @@
                             @endif
                         </td>
                         <td>{{ \Carbon\Carbon::parse($orderList->tglDiantar)->isoFormat('D MMMM Y') }}</td>
-                        <td>{{ $orderList->harga * $orderList->jumlah }}</td>
+                        <td>{{ $orderList->harga }}</td>
                     </tr>
                     @php
-                        $totalHarga += ($orderList->harga * $orderList->jumlah);
+                        $totalHarga += $orderList->harga;
                         if ($orderList->jenis->satuan == 'KG') {
                             $totalBerat += $orderList->jumlah;
                         } else {
@@ -181,4 +208,33 @@
     <h3>No Transaction No Found</h3>
     @endif
 </section>
+@endsection
+@section('script')
+@if ( $snapToken )
+<script type="text/javascript">
+    // For example trigger on button clicked, or any time you need
+    var payButton = document.getElementById('pay-button');
+    payButton.addEventListener('click', function () {
+      // Trigger snap popup. @TODO: Replace TRANSACTION_TOKEN_HERE with your transaction token
+      window.snap.pay('{{$snapToken}}', {
+        onSuccess: function(result){
+          /* You may add your own implementation here */
+          alert("payment success!"); console.log(result);
+        },
+        onPending: function(result){
+          /* You may add your own implementation here */
+          alert("wating your payment!"); console.log(result);
+        },
+        onError: function(result){
+          /* You may add your own implementation here */
+          alert("payment failed!"); console.log(result);
+        },
+        onClose: function(){
+          /* You may add your own implementation here */
+          alert('you closed the popup without finishing the payment');
+        }
+      })
+    });
+</script>
+@endif
 @endsection

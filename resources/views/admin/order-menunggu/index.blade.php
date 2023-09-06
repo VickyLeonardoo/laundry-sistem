@@ -3,10 +3,11 @@
 @section('title','Orderan Menunggu Verifikasi')
 
 @section('content')
-<div class="alert alert-light-success color-success"><i class="bi bi-check-circle"></i>
-    Order Berhasil Diproses
-</div>
-
+@if (session('success'))
+    <div class="alert alert-light-success color-success"><i class="bi bi-check-circle"></i>
+        Order Berhasil Diproses
+    </div>
+@endif
 <div class="card">
     <div class="card-header text-end">
         <a href="{{ route('admin.discount.create') }}" class="btn btn-primary">Tambah</a>

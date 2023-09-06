@@ -4,8 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- @TODO: replace SET_YOUR_CLIENT_KEY_HERE with your client key -->
+    <script type="text/javascript"
+      src="https://app.sandbox.midtrans.com/snap/snap.js"
+      data-client-key="{{ config('midtrans.client_key') }}"></script>
+    <!-- Note: replace with src="https://app.midtrans.com/snap/snap.js" for Production environment -->
     <title>E-Laundry|@yield('title')</title>
-
     <link rel="stylesheet" href="{{ asset('assets') }}/css/main/app.css">
     <link rel="shortcut icon" href="{{ asset('assets') }}/images/logo/favicon.svg" type="image/x-icon">
     <link rel="shortcut icon" href="{{ asset('assets') }}/images/logo/favicon.png" type="image/png">
@@ -95,6 +99,8 @@
     <script src="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.js"></script>
     <script src="{{ asset('assets') }}/js/pages/datatables.js"></script>
     <script src="{{ asset('assets') }}/extensions/sweetalert2/sweetalert2.min.js"></script>
+    @yield('script')
+
     @if(session('success'))
         <script>
             Swal.fire({

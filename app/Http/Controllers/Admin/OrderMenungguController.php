@@ -74,12 +74,15 @@ class OrderMenungguController extends Controller
                 'pointOrder' => $pointOrder,
             ]);
             $order->update([
-                'statusOrder' => 'Diproses'
+                'statusOrder' => 'Diproses',
+                'statusPembayaran' => 'Menunggu Pembayaran',
             ]);
             return redirect()->route('admin.order.menunggu.show')->with('success',true);
         }else{
             $order->update([
-                'statusOrder' => 'Diproses'
+                'statusOrder' => 'Diproses',
+                'statusPembayaran' => 'Menunggu Pembayaran',
+
             ]);
             $countPoint->update([
                 'pointOrder' => $countPoint->pointOrder + $pointOrder,
