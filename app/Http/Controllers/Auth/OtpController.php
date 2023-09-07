@@ -31,7 +31,6 @@ class OtpController extends Controller
                 'validTime' => $time,
             ]);
             Mail::to($email)->send(new VerifikasiMail($email,$otp['otp']));
-
             return redirect()->back()->with('message','OTP Berhasil Dikirim Silahkan Periksa Email Kamu');
         }else{
             $otp->update([

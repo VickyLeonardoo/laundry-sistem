@@ -5,80 +5,171 @@
 @section('content')
 <section class="row">
     <div class="col-12 col-lg-9">
-        <div class="row">
-            <div class="col-6 col-lg-3 col-md-6">
-                <div class="card">
-                    <div class="card-body px-4 py-4-5">
-                        <div class="row">
-                            <div
-                                class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-                                <div class="stats-icon purple mb-2">
-                                    <i class="iconly-boldShow"></i>
+        <div class="card">
+            <div class="card-header">
+                <h5>Statistik {{ \Carbon\Carbon::parse($todayDate)->isoFormat('D MMMM Y') }}</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6 col-lg-3 col-md-6">
+                        <div class="card" style="background: #f2f6ff">
+                            <div class="card-body px-4 py-4-5">
+                                <div class="row">
+                                    <div
+                                        class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                                        <div class="stats-icon blue mb-2">
+                                            <i class="iconly-boldProfile"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                        <h6 class="text-muted font-semibold">Order Menunggu</h6>
+                                        <h6 class="font-extrabold mb-0">{{ $orderSelesai }}</h6>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                <h6 class="text-muted font-semibold">Today Order</h6>
-                                <h6 class="font-extrabold mb-0">112.000</h6>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-6 col-lg-3 col-md-6">
-                <div class="card">
-                    <div class="card-body px-4 py-4-5">
-                        <div class="row">
-                            <div
-                                class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-                                <div class="stats-icon blue mb-2">
-                                    <i class="iconly-boldProfile"></i>
+                    <div class="col-6 col-lg-3 col-md-6">
+                        <div class="card" style="background: #f2f6ff">
+                            <div class="card-body px-4 py-4-5">
+                                <div class="row">
+                                    <div
+                                        class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                                        <div class="stats-icon blue mb-2">
+                                            <i class="iconly-boldProfile"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                        <h6 class="text-muted font-semibold">Order di Proses</h6>
+                                        <h6 class="font-extrabold mb-0">{{ $orderProses }}</h6>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                <h6 class="text-muted font-semibold">Today Money</h6>
-                                <h6 class="font-extrabold mb-0">183.000</h6>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-6 col-lg-3 col-md-6">
-                <div class="card">
-                    <div class="card-body px-4 py-4-5">
-                        <div class="row">
-                            <div
-                                class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-                                <div class="stats-icon green mb-2">
-                                    <i class="iconly-boldAdd-User"></i>
+                    <div class="col-6 col-lg-3 col-md-6">
+                        <div class="card" style="background: #f2f6ff">
+                            <div class="card-body px-4 py-4-5">
+                                <div class="row">
+                                    <div
+                                        class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                                        <div class="stats-icon green mb-2">
+                                            <i class="iconly-boldAdd-User"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                        <h6 class="text-muted font-semibold">Order Selesai</h6>
+                                        <h6 class="font-extrabold mb-0">{{ $orderSelesai }}</h6>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                <h6 class="text-muted font-semibold">Outlet</h6>
-                                <h6 class="font-extrabold mb-0">80.000</h6>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-6 col-lg-3 col-md-6">
-                <div class="card">
-                    <div class="card-body px-4 py-4-5">
-                        <div class="row">
-                            <div
-                                class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-                                <div class="stats-icon red mb-2">
-                                    <i class="iconly-boldBookmark"></i>
+                    <div class="col-6 col-lg-3 col-md-6">
+                        <div class="card" style="background: #f2f6ff">
+                            <div class="card-body px-4 py-4-5">
+                                <div class="row">
+                                    <div
+                                        class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                                        <div class="stats-icon red mb-2">
+                                            <i class="iconly-boldBookmark"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                        <h6 class="text-muted font-semibold">Today Order</h6>
+                                        <h6 class="font-extrabold mb-0">{{ $todayOrder }}</h6>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                <h6 class="text-muted font-semibold">Karyawan</h6>
-                                <h6 class="font-extrabold mb-0">112</h6>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h5>Statistik Keseluruhan</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6 col-lg-3 col-md-6">
+                        <div class="card" style="background: #f2f6ff">
+                            <div class="card-body px-4 py-4-5">
+                                <div class="row">
+                                    <div
+                                        class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                                        <div class="stats-icon purple mb-2">
+                                            <i class="iconly-boldShow"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                        <h6 class="text-muted font-semibold">Order Menunggu</h6>
+                                        <h6 class="font-extrabold mb-0">{{ $totalMenunggu }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3 col-md-6">
+                        <div class="card" style="background: #f2f6ff">
+                            <div class="card-body px-4 py-4-5">
+                                <div class="row">
+                                    <div
+                                        class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                                        <div class="stats-icon blue mb-2">
+                                            <i class="iconly-boldProfile"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                        <h6 class="text-muted font-semibold">Order di Proses</h6>
+                                        <h6 class="font-extrabold mb-0">{{ $totalProses }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3 col-md-6">
+                        <div class="card" style="background: #f2f6ff">
+                            <div class="card-body px-4 py-4-5">
+                                <div class="row">
+                                    <div
+                                        class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                                        <div class="stats-icon green mb-2">
+                                            <i class="iconly-boldAdd-User"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                        <h6 class="text-muted font-semibold">Order Selesai</h6>
+                                        <h6 class="font-extrabold mb-0">{{ $totalSelesai }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3 col-md-6">
+                        <div class="card" style="background: #f2f6ff">
+                            <div class="card-body px-4 py-4-5">
+                                <div class="row">
+                                    <div
+                                        class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                                        <div class="stats-icon red mb-2">
+                                            <i class="iconly-boldBookmark"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                        <h6 class="text-muted font-semibold">Total Order</h6>
+                                        <h6 class="font-extrabold mb-0">{{ $totalOrder }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- End of Stats --}}
         <div class="row">
             <div class="col-12 col-xl-4">
                 <div class="card">
