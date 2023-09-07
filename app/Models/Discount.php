@@ -9,4 +9,8 @@ class Discount extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+
+    public function voucher(){
+        return $this->hasMany(Voucher::class);
+    }
 }

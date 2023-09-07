@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pelanggan;
 
 use Midtrans\Snap;
 use App\Models\Order;
+use App\Models\Voucher;
 use App\Models\Orderitem;
 use App\Models\Snaptoken;
 use App\Models\OrderCount;
@@ -18,11 +19,19 @@ class OrderController extends Controller
         return view('pelanggan.order.index', compact('orders'));
     }
     public function create(){
+        $userId = auth()->user()->id;
         $transactionNo = NULL;
-        return view('pelanggan.order.create', compact('transactionNo'));
+        $vouchers = NULL;
+        $vouchersSearch = Voucher::where('user_id', $userId)->where('jumlah', '>', 0)->get();
+        if ($vouchersSearch->isEmpty()) {
+            $vouchers = NULL;
+        } else {
+            $vouchers = $vouchersSearch;
+        }
+        return view('pelanggan.order.create', compact('transactionNo','vouchers'));
     }
 
-    public function createTrackno(){
+    public function createTrackno(Request $request){
         date_default_timezone_set('Asia/Jakarta');
         $userId = auth()->user()->id;
         $randomNumbers = str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
@@ -32,6 +41,7 @@ class OrderController extends Controller
         ->whereDate('created_at', $today)
         ->count();
         $time = Carbon::now();
+        $voucher = Voucher::where('user_id',$userId)->where('discount_id',$request->discount_id)->first();
 
         if ($orderCountToday >= 3) {
             return redirect()->back()->with('errOrder',true);
@@ -40,7 +50,13 @@ class OrderController extends Controller
                 'user_id' => $userId,
                 'transactionNo' => $transactionNo,
                 'tglOrder' => $time,
+                'discount_id' => $request->discount_id,
             ]);
+            if ($voucher) {
+                $voucher->update([
+                    'jumlah' => $voucher->jumlah - 1,
+                ]);
+            }
             return redirect()->back()->with('transactionNo', $transactionNo);
         }
     }

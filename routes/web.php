@@ -115,6 +115,8 @@ Route::prefix('pelanggan')->middleware(['auth:user'])->group(function () {
         //Promo
         Route::controller(PromoController::class)->group(function (){
             Route::get('/promo','show')->name('pelanggan.promo.show');
+            Route::get('/voucher-saya', 'voucher')->name('pelanggan.promo.voucher');
+            Route::post('/promo/{id}/claim-voucher', 'claimVoucher')->name('pelanggan.promo.claim');
         });
 
 

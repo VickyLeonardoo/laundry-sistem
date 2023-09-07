@@ -28,11 +28,24 @@
                 </div>
             </li>
 
-            <li class="menu-item active">
-                <a href="{{ route('pelanggan.promo.show') }}" class='menu-link active'>
+            <li class="menu-item  has-sub">
+                <a href="#" class='menu-link'>
                     <i class="fa-solid fa-percent" style="color: #ffffff;"></i>
                     <span>Promo</span>
                 </a>
+                <div class="submenu ">
+                    <!-- Wrap to submenu-group-wrapper if you want 3-level submenu. Otherwise remove it. -->
+                    <div class="submenu-group-wrapper">
+                        <ul class="submenu-group">
+                            <li class="submenu-item">
+                                <a href="{{ route('pelanggan.promo.show') }}" class='submenu-link'>Daftar Promo</a>
+                            </li>
+                            <li class="submenu-item">
+                                <a href="{{ route('pelanggan.promo.voucher') }}" class='submenu-link'>Voucher Saya</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </li>
         </ul>
     </div>

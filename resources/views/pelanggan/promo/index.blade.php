@@ -2,14 +2,21 @@
 @section('title','Promo List')
 @section('content')
 <section class="row">
+    @if (session('success'))
+        <div class="alert alert-light-success color-success"><i class="bi bi-check-circle"></i>
+            Berhasil Claim Voucher.
+        </div>
+    @endif
     <div class="col-lg-3">
         <span class="badge bg-success">Poin Dimiliki: {{ $poin }}</span>
     </div>
     <div class="col-12 col-lg-12 mt-5">
         <div class="row">
             @foreach ($promos as $promo)
-                @if ($poin > $promo->persyaratan)
-                    <div class="col-6 col-lg-3 col-md-6">
+                @if ($poin >= $promo->persyaratan)
+                <div class="col-6 col-lg-3 col-md-6">
+                    <form action="{{ route('pelanggan.promo.claim',$promo->id) }}" method="POST">
+                        @csrf
                         <div class="card">
                             <div class="card-body px-4 py-4-5">
                                 <h5 class="text-center">{{ $promo->nama }}</h5>
@@ -23,11 +30,13 @@
                                         <h6 class="text-muted font-semibold">Point Persyaratan</h6>
                                         <h6 class="font-extrabold mb-0">{{ $promo->persyaratan }}</h6>
                                     </div>
-                                    <a href="" class="btn btn-primary">Claim</a>
+                                    <button type="submit" class="btn btn-primary">Claim</button>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
+                </div>
+
                 @else
                     <div class="col-6 col-lg-3 col-md-6">
                         <div class="card ">

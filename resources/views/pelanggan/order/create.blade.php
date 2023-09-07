@@ -62,6 +62,19 @@
                             <input type="text" class="form-control" value="{{ auth()->user()->noHp }}" readonly>
                         </div>
                         <div class="form-group">
+                            <label>Nomor Hp</label>
+                            <select name="discount_id" class="form-control">
+                                @if ($vouchers)
+                                    <option value="" selected disabled>--Pilih Voucher--</option>
+                                    @foreach ($vouchers as $voucher)
+                                        <option value="{{ $voucher->discount_id }}">{{ $voucher->discount->nama }}</option>
+                                    @endforeach
+                                @else
+                                    <option value="">--Kamu Tidak Punya Voucher--</option>
+                                @endif
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <input type="submit" value="Get Tracking No" class="btn btn-primary form-control">
                         </div>
                     </form>
