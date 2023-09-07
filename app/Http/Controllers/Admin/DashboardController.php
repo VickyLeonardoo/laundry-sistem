@@ -14,10 +14,10 @@ class DashboardController extends Controller
         $todayDate = Carbon::now();
 
         //Today Order
-        $orderProses = Order::where('statusOrder','Diproses')->where('created_at',$todayDate)->count();
-        $orderSelesai = Order::where('statusOrder','Selesai')->where('created_at',$todayDate)->count();
-        $orderMenunggu = Order::where('statusOrder','Menunggu Verifikasi')->where('created_at',$todayDate)->count();
-        $todayOrder = Order::where('created_at',$todayDate)->count();
+        $orderProses = Order::where('statusOrder','Diproses')->whereDate('created_at',$todayDate)->count();
+        $orderSelesai = Order::where('statusOrder','Selesai')->whereDate('created_at',$todayDate)->count();
+        $orderMenunggu = Order::where('statusOrder','Menunggu Verifikasi')->whereDate('created_at',$todayDate)->count();
+        $todayOrder = Order::whereDate('created_at',$todayDate)->count();
 
         //Total Order
         $totalOrder = Order::count();

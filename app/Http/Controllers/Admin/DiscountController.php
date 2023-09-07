@@ -23,13 +23,20 @@ class DiscountController extends Controller
             'nama' => 'required',
             'nominal' => 'required',
             'persyaratan' => 'required',
+            'deskripsi' => 'required',
+            'status' => 'required',
+            'tipeDiscount' => 'required',
         ],[
             'nama.required' => 'Nama Wajib Diisi',
+            'status.required' => 'Status Wajib Diisi',
+            'tipeDiscount.required' => 'Tipe Diskon Wajib Diisi',
             'nominal.required' => 'Nominal Wajib Diisi',
             'persyaratan.required' => 'Persayratan Wajib Diisi',
+            'deskripsi.required' => 'Deskripsi Wajib Diisi',
         ]);
         Discount::create([
             'nama' => $request->nama,
+            'deskripsi' => $request->deskripsi,
             'tipeDiscount' => $request->tipeDiscount,
             'nominal' => $request->nominal,
             'persyaratan' => $request->persyaratan,

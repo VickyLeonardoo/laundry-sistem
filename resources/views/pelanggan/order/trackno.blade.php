@@ -10,7 +10,7 @@
                     <h4>{{ $order->transactionNo }}</h4>
                 </div>
                 <div class="col-12 col-xl-3 text-end">
-                    <a href="{{ route('pelanggan.order.show') }}" class="btn btn-primary "><i class="fas fa-left-arrow"></i>Back</a>
+                    <a href="{{ route('pelanggan.order.show') }}" class="btn btn-primary "><i class="fas fa-arrow-left"></i>Back</a>
                 </div>
             </div>
         </div>

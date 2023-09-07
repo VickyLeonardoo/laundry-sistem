@@ -23,7 +23,7 @@
                                     </div>
                                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                         <h6 class="text-muted font-semibold">Order Menunggu</h6>
-                                        <h6 class="font-extrabold mb-0">{{ $orderSelesai }}</h6>
+                                        <h6 class="font-extrabold mb-0">{{ $orderMenunggu }}</h6>
                                     </div>
                                 </div>
                             </div>

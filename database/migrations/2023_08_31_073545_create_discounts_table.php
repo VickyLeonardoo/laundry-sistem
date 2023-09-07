@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('discounts', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->string('deskripsi');
             $table->enum('tipeDiscount',['percent','harga']);
             $table->integer('nominal');
             $table->integer('persyaratan');

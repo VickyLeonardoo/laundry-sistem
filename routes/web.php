@@ -6,10 +6,12 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\OutletController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\DiscountController;
+use App\Http\Controllers\Pelanggan\OrderController;
 use App\Http\Controllers\Admin\JenisbarangController;
 use App\Http\Controllers\Admin\OrderProsesController;
 use App\Http\Controllers\Admin\OrderSelesaiController;
 use App\Http\Controllers\Admin\OrderMenungguController;
+use App\Http\Controllers\Pelanggan\PromoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,13 +103,20 @@ Route::prefix('pelanggan')->middleware(['auth:user'])->group(function () {
     Route::group(['middleware' => ['cek_login:1']], function () {
         Route::get('dashboard',[App\Http\Controllers\Pelanggan\DashboardController::class, 'index'])->name('pelanggan.dashboard');
 
-        Route::controller(App\Http\Controllers\Pelanggan\OrderController::class)->group(function (){
+        //Order
+        Route::controller(OrderController::class)->group(function (){
             Route::get('/order','show')->name('pelanggan.order.show');
             Route::get('/order/create','create')->name('pelanggan.order.create');
             Route::post('/order/create/','createTrackno')->name('pelanggan.order.createTrackno');
             Route::get('/order/{transactionNo}','viewTrack')->name('pelanggan.order.trackno');
             Route::post('/order/{id}/metode-pembayaran','updateMetode')->name('pelanggan.order.metode');
         });
+
+        //Promo
+        Route::controller(PromoController::class)->group(function (){
+            Route::get('/promo','show')->name('pelanggan.promo.show');
+        });
+
 
     });
 });

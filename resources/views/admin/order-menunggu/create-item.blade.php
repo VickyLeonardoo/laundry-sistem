@@ -10,7 +10,7 @@
     @endif
     <div class="card">
         <div class="card-header text-end">
-            <a href="{{ route('admin.order.menunggu.transaction.edit',$transactionNo) }}" class="btn btn-primary "><i class="fas fa-left-arrow"></i>Back</a>
+            <a href="{{ route('admin.order.menunggu.transaction.edit',$transactionNo) }}" class="btn btn-primary "><i class="fas fa-arrow-left"></i>Back</a>
         </div>
     </div>
     <div class="card">

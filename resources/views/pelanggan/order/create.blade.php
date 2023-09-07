@@ -18,7 +18,7 @@
         <div class="row">
             <div class="card">
                 <div class="card-header text-end">
-                    <a href="{{ route('pelanggan.order.show') }}" class="btn btn-primary "><i class="fas fa-left-arrow"></i>Back</a>
+                    <a href="{{ route('pelanggan.order.show') }}" class="btn btn-primary "><i class="fas fa-arrow-left"></i>Back</a>
                 </div>
                 <div class="card-body">
                     <label>Tracking NO</label>
@@ -30,7 +30,7 @@
                             Klik "View Order" untuk Melihat Orderan
                         </div>
                         <div class="text-end">
-                            <a href="" class="btn btn-primary text-end">View Order</a>
+                            <a href="{{ route('pelanggan.order.trackno',session('transactionNo')) }}" class="btn btn-primary text-end">View Order</a>
                         </div>
                     @elseif (session('errOrder'))
                     <input type="text" class="form-control" value="--" readonly>

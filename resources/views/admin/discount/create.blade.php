@@ -11,7 +11,7 @@
 
     <div class="card-header text-end">
 
-        <a href="{{ route('admin.discount.show') }}" class="btn btn-primary"><i class="fas fa-left-arrow"></i>Back</a>
+        <a href="{{ route('admin.discount.show') }}" class="btn btn-primary"><i class="fas fa-arrow-left"></i>Back</a>
     </div>
 </div>
 
@@ -26,14 +26,25 @@
                     <h6 class="text-danger">{{ $message }}</h6>
                 @enderror
             </div>
+            <div class="form-group">
+                <label for="">Deskripsi</label>
+                <textarea name="deskripsi" rows="3" class="form-control {{ $errors->has('deskripsi') ? 'is-invalid':'' }}">{{ old('deskripsi') }}</textarea>
+                @error('deskripsi')
+                    <h6 class="text-danger">{{ $message }}</h6>
+                @enderror
+            </div>
             <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>Tipe:</label>
-                        <select name="tipeDiscount" class="form-control">
+                        <select name="tipeDiscount" class="form-control {{ $errors->has('tipeDiscount') ? 'is-invalid':'' }}">
+                            <option value="" selected disabled>Pilih Tipe</option>
                             <option value="percent">Persen (%)</option>
                             <option value="harga">Harga (Rp.)</option>
                         </select>
+                        @error('tipeDiscount')
+                            <h6 class="text-danger">{{ $message }}</h6>
+                        @enderror
                     </div>
                 </div>
                 <div class="col-md-9">
@@ -55,10 +66,14 @@
             </div>
             <div class="form-group">
                 <label>Status</label>
-                <select name="status" class="form-control">
+                <select name="status" class="form-control {{ $errors->has('status') ? 'is-invalid':'' }}">
+                    <option value="" selected disabled>Pilih Status</option>
                     <option value="active">Active</option>
                     <option value="inactive">Inactive</option>
                 </select>
+                @error('status')
+                    <h6 class="text-danger">{{ $message }}</h6>
+                @enderror
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Simpan</button>

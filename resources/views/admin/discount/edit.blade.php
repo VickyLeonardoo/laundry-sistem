@@ -8,10 +8,8 @@
 </div>
 @endif
 <div class="card">
-
     <div class="card-header text-end">
-
-        <a href="{{ route('admin.discount.show') }}" class="btn btn-primary"><i class="fas fa-left-arrow"></i>Back</a>
+        <a href="{{ route('admin.discount.show') }}" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back</a>
     </div>
 </div>
 
@@ -26,11 +24,19 @@
                     <h6 class="text-danger">{{ $message }}</h6>
                 @enderror
             </div>
+            <div class="form-group">
+                <label for="">Deskripsi</label>
+                <textarea name="deskripsi" class="form-control {{ $errors->has('deskripsi') ? 'is-invalid':'' }}" rows="3">{{ $discount->deskripsi }}</textarea>
+                @error('deskripsi')
+                    <h6 class="text-danger">{{ $message }}</h6>
+                @enderror
+            </div>
             <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>Tipe:</label>
                         <select name="tipeDiscount" class="form-control">
+                            <option value="" disabled>--Pilih Tipe--</option>
                             <option value="percent" {{ $discount->tipeDiscount == 'percent' ? 'selected':'' }}>Persen (%)</option>
                             <option value="harga" {{ $discount->tipeDiscount == 'harga' ? 'selected':'' }}>Harga (Rp.)</option>
                         </select>

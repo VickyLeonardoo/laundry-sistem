@@ -27,6 +27,13 @@
                     </div>
                 </div>
             </li>
+
+            <li class="menu-item active">
+                <a href="{{ route('pelanggan.promo.show') }}" class='menu-link active'>
+                    <i class="fa-solid fa-percent" style="color: #ffffff;"></i>
+                    <span>Promo</span>
+                </a>
+            </li>
         </ul>
     </div>
 </nav>
