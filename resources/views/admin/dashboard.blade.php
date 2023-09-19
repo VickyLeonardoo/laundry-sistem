@@ -173,17 +173,17 @@
         <div class="row">
             <div class="col-12 col-xl-4">
                 <div class="card">
-                    <div class="card-header">
+                    {{-- <div class="card-header">
                         <h4></h4>
-                    </div>
-                    <div class="card-body">
+                    </div> --}}
+                    {{-- <div class="card-body">
                         <div class="row">
 
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
-            <div class="col-12 col-xl-8">
+            {{-- <div class="col-12 col-xl-8">
                 <div class="card">
                     <div class="card-header">
                         <h4>Status Orderan</h4>
@@ -231,7 +231,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
     <div class="col-12 col-lg-3">
@@ -248,7 +248,7 @@
                 </div>
             </div>
         </div>
-        <div class="card">
+        {{-- <div class="card">
             <div class="card-header">
                 <h4>Recent Order</h4>
             </div>
@@ -284,7 +284,7 @@
                     <a class='btn btn-primary btn-block btn-xl btn-outline-primary font-bold mt-3'>All Order</a>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 </section>
 @endsection
