@@ -13,4 +13,8 @@ class Discount extends Model
     public function voucher(){
         return $this->hasMany(Voucher::class);
     }
+
+    public function order(){
+        return $this->hasMany(Order::class);
+    }
 }

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->id()->startingValue(17);
+            $table->id()->startingValue(25);
             $table->foreignId('user_id')->references('id')->on('users');
             $table->string('transactionNo');
             $table->enum('statusOrder',['Menunggu Verifikasi','Diproses','Selesai'])->defaut('Menunggu Verifikasi');
@@ -22,6 +22,7 @@ return new class extends Migration
             $table->enum('is_taken',['yes','no'])->default('no');
             $table->foreignId('discount_id')->nullable();
             $table->timestamp('tglOrder')->nullable();
+            $table->integer('total')->nullable();
             $table->timestamps();
         });
     }

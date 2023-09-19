@@ -3,16 +3,24 @@
 @section('content')
     @if ($order)
         <section class="row">
+            @if (session('error'))
+            <div class="alert alert-light-danger color-danger"><i class="bi bi-exclamation-circle"></i>
+                {{ session('error') }}
+            </div>
+            @endif
             <div class="card">
                 <div class="card-header">
                     <div class="row">
                         <div class="col-12 col-lg-9">
                             <h4>{{ $order->transactionNo }}</h4>
+                            @if ($order->is_discount == 'yes')
+                                <small class="badge bg-info">{{ $order->discount->nama }}</small>
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('admin.order.menunggu.transaction.proses', $transactionNo) }}" method="POST">
+                    <form action="{{ route('admin.order.menunggu.transaction.proses', ['transactionNo' => $transactionNo, 'hargaTotal' => $hargaTotal]) }}" method="POST">
                         <div class="row">
                             @csrf
                             <div class="col-12 col-xl-6">
@@ -137,7 +145,7 @@
                                     <th></th>
                                     <th></th>
                                     <th>Total Harga</th>
-                                    <th>{{ $totalHarga }}</th>
+                                    <th>{{ $hargaTotal }}</th>
                                 </tr>
                             @elseif($totalItem != 0 && $totalBerat == 0)
                                 <tr class="text-end">
@@ -156,7 +164,7 @@
                                     <th></th>
                                     <th></th>
                                     <th>Total Harga</th>
-                                    <th>{{ $totalHarga }}</th>
+                                    <th>{{ $hargaTotal }}</th>
                                 </tr>
                             @else
                                 <tr class="text-end">
@@ -181,7 +189,7 @@
                                     <th></th>
                                     <th></th>
                                     <th>Total Harga</th>
-                                    <th>{{ $totalHarga }}</th>
+                                    <th>{{ $hargaTotal }}</th>
                                 </tr>
                             @endif
 

@@ -41,6 +41,11 @@ class OrderController extends Controller
         ->whereDate('created_at', $today)
         ->count();
         $time = Carbon::now();
+        if ($request->discount_id != '') {
+            $is_discount = 'yes';
+        }else{
+            $is_discount = 'no';
+        }
         $voucher = Voucher::where('user_id',$userId)->where('discount_id',$request->discount_id)->first();
 
         if ($orderCountToday >= 3) {
@@ -51,6 +56,7 @@ class OrderController extends Controller
                 'transactionNo' => $transactionNo,
                 'tglOrder' => $time,
                 'discount_id' => $request->discount_id,
+                'is_discount' => $is_discount,
             ]);
             if ($voucher) {
                 $voucher->update([
@@ -104,7 +110,7 @@ class OrderController extends Controller
             $params = array(
                 'transaction_details' => array(
                     'order_id' => $order->id,
-                    'gross_amount' => $totalHarga,
+                    'gross_amount' => $order->total,
                 ),
                 'customer_details' => array(
                     'name' => auth()->user()->name,

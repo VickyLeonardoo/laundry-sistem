@@ -78,7 +78,7 @@ Route::prefix('admin')->middleware(['auth:user'])->group(function () {
         Route::controller(OrderMenungguController::class)->group(function (){
             Route::get('/order/menunggu','show')->name('admin.order.menunggu.show');
             Route::get('/order/menunggu/{transactionNo}/edit' ,'edit')->name('admin.order.menunggu.transaction.edit');
-            Route::post('/order/menunggu/{transactionNo}/proses' ,'proses')->name('admin.order.menunggu.transaction.proses');
+            Route::post('/order/menunggu/{transactionNo}/{hargaTotal}/proses' ,'proses')->name('admin.order.menunggu.transaction.proses');
             Route::get('/order/menunggu/{transactionNo}/create/order-item' ,'createOrderItem')->name('admin.order.menunggu.transaction.create');
             Route::post('/order/menunggu/{id}/create/order-item' ,'storeOrderItem')->name('admin.order.menunggu.transaction.store');
         });
