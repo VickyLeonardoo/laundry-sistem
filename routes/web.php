@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\OrderProsesController;
 use App\Http\Controllers\Admin\OrderSelesaiController;
 use App\Http\Controllers\Admin\OrderMenungguController;
 use App\Http\Controllers\Pelanggan\PromoController;
+use App\Http\Controllers\Pelanggan\TrackController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +31,7 @@ Route::get('/register', function(){
     return view('auth.register');
 });
 
-Route::get('/',[LoginController::class,'show']);
+Route::get('/',[TrackController::class,'index']);
 Route::get('/login',[LoginController::class,'show'])->name('login');
 Route::get('/logout',[LoginController::class,'logout'])->name('logout');
 Route::post('/simpan-pendaftaran',[RegisterController::class,'store'])->name('simpan.pendaftaran');
@@ -38,7 +39,8 @@ Route::get('/verifikasi-akun',[OtpController::class,'view'])->name('otp.show');
 Route::post('/verifikasi-otp',[OtpController::class,'verifyOtp'])->name('otp.verify');
 Route::post('/proses-login',[LoginController::class,'prosesLogin'])->name('login.proses');
 Route::get('/kirim-ulang-otp',[OtpController::class,'reSend'])->name('otp.kirim.ulang');
-
+Route::get('/track',[TrackController::class,'index']);
+Route::get('/track/{orderNo}',[TrackController::class,'track']);
 
 Route::prefix('admin')->middleware(['auth:user'])->group(function () {
     Route::group(['middleware' => ['cek_login:0']], function () {
