@@ -28,7 +28,7 @@
                 <div class="header-top">
                     <div class="container">
                         <div class="logo">
-                            <a href="index.html"><img src="{{ asset('assets') }}/images/logo/logo.svg" alt="Logo"></a>
+                            <a href="#"><img src="{{ asset('assets') }}/images/logo/logo.svg" alt="Logo"></a>
                         </div>
                         <div class="header-top-right">
 
@@ -37,7 +37,6 @@
                                     class="user-dropdown d-flex align-items-center dropend dropdown-toggle "
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     <div class="avatar avatar-md2">
-                                        <img src="{{ asset('assets') }}/images/faces/1.jpgs" alt="Avatar">
                                     </div>
                                     <div class="text">
                                         <h6 class="user-dropdown-name">{{ auth()->user()->name }}</h6>
@@ -46,7 +45,7 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end shadow-lg"
                                     aria-labelledby="topbarUserDropdown">
-                                    <li><a class="dropdown-item" href="#">My Account</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('pelanggan.profile.show') }}">My Account</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
@@ -102,7 +101,6 @@
     <script src="{{ asset('assets') }}/js/pages/datatables.js"></script>
     <script src="{{ asset('assets') }}/extensions/sweetalert2/sweetalert2.min.js"></script>
     @yield('script')
-
     @if(session('success'))
         <script>
             Swal.fire({

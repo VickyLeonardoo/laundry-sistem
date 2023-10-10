@@ -76,4 +76,17 @@ class DiscountController extends Controller
         $discount->delete();
         return redirect()->back()->with('success',true);
     }
+
+    public function updateStatus(Request $request){
+        $request->validate([
+            'status' => 'required|in:active,inactive',
+            'discounts' => 'required|array',
+        ]);
+
+        $newStatus = $request->input('status');
+
+        $selectedDiscounts = $request->input('discounts', []);
+        Discount::whereIn('id', $selectedDiscounts)->update(['status' => $newStatus]);
+        return redirect()->back()->with('updated', 'Status diskon diperbarui.');
+    }
 }

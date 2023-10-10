@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\JenisbarangController;
 use App\Http\Controllers\Admin\OrderProsesController;
 use App\Http\Controllers\Admin\OrderSelesaiController;
 use App\Http\Controllers\Admin\OrderMenungguController;
+use App\Http\Controllers\Pelanggan\ProfileController;
 use App\Http\Controllers\Pelanggan\PromoController;
 use App\Http\Controllers\Pelanggan\TrackController;
 
@@ -64,6 +65,7 @@ Route::prefix('admin')->middleware(['auth:user'])->group(function () {
             Route::get('/discount/{id}/edit','edit')->name('admin.discount.edit');
             Route::post('/discount/{id}/update','update')->name('admin.discount.update');
             Route::get('/discount/{id}/destroy','destroy')->name('admin.discount.destroy');
+            Route::post('/discount','updateStatus')->name('admin.update.discount.status');
         });
 
         // Tipe Orderan
@@ -119,6 +121,12 @@ Route::prefix('pelanggan')->middleware(['auth:user'])->group(function () {
             Route::get('/promo','show')->name('pelanggan.promo.show');
             Route::get('/voucher-saya', 'voucher')->name('pelanggan.promo.voucher');
             Route::post('/promo/{id}/claim-voucher', 'claimVoucher')->name('pelanggan.promo.claim');
+        });
+
+        //Profile
+        Route::controller(ProfileController::class)->group(function (){
+            Route::get('/profile','show')->name('pelanggan.profile.show');
+            Route::post('/profile','update')->name('pelanggan.profile.update');
         });
 
 

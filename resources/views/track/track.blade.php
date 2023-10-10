@@ -19,7 +19,7 @@
                 <div class="header-top">
                     <div class="container">
                         <div class="logo">
-                            <a href="index.html"><img src="{{ asset('assets') }}/images/logo/logo.svg" alt="Logo"></a>
+                            <a href="#"><img src="{{ asset('assets') }}/images/logo/logo.svg" alt="Logo"></a>
                         </div>
                         <div class="header-top-right">
                             <!-- Burger button responsive -->

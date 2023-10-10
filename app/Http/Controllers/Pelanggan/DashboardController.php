@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pelanggan;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use App\Models\OrderCount;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class DashboardController extends Controller
         if ($orderPoint) {
             $poin = $orderPoint->pointOrder;
         }
-        return view('pelanggan.dashboard', compact('poin'));
+        $orders = Order::where('user_id',auth()->user()->id)->take(3)->get();
+        return view('pelanggan.dashboard', compact('poin','orders'));
     }
 
 }
